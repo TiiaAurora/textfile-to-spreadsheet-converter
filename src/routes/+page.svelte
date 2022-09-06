@@ -19,12 +19,15 @@
 			}
 			if (line.includes(': ')) {
 				// example: Konto: 91680020
-				let [key, value] = line.split(':');
-				fields[key] = value;
+				const pos = line.indexOf(': ');
+				const key = line.substring(0, pos);
+				const value = line.substring(pos + 2);
+				fields[key] = value.replace('\t', ' ');
 			} else {
 				// example: 16.08.2022 - 19:06:19
 				fields['Datum'] = line;
 				lines.push(convertRowToString(fields));
+				fields = {};
 			}
 		}
 
